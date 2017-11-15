@@ -7,19 +7,12 @@ console.log('**** Circular dependencies analysis ****');
 
 const file = path.resolve(process.env.OUICAR_WEB_PATH, 'logs/webpack.errors.log');
 console.log(`Reading file ${file}`);
-const lines = fs.readFileSync(file, 'utf-8').split('\n');
+const fileContent = fs.readFileSync(file, 'utf-8');
 
-const circularPaths = lines
-    // keep only circular dependencies error 
-    .filter(line => line.indexOf('Circular dependency') !== -1)
-    // remove the ones involving node_modules
-    .filter(line => line.indexOf('node_modules/') === -1)
-    // remove some color stuff, appears in some cases
-    .map(line => line.replace('\u001b[1m\u001b[31m', ''))
-    .map(line => line.replace('\u001b[39m\u001b[22m', ''))
-    // clean up the beginning of the line
-    .map(line => line.replace(/- \d+: Circular dependency : /, ''))
-    .map(line => line.split('->'));
+const circularPaths = JSON.parse(fileContent)
+    .errors
+    .filter(err => err.type === 'circular')
+    .map(err => err.msg.split('->'));
 
 console.log(`We got ${circularPaths.length} circular paths`);
 
@@ -50,7 +43,12 @@ circularPaths
             return `UTIL_PROMISE_TO_REDUX_STORE`
         }
         // all other
-        return 'other';
+        const shortenedVersion = circularPath
+            .map(filePath => filePath.slice(-20))
+            .map(filePath => '...' + filePath)
+            .join('->')
+            .slice(0, 100) + '...';
+        return `other : ${shortenedVersion}`;
     })
     //.filter(Array.isArray)
     .sort()
