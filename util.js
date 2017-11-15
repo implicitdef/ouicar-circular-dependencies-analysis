@@ -1,6 +1,11 @@
-import * as _ from 'lodash';
+const _ = require('lodash');
 
-export function findJsToJsxImport(circularPath: string[]): [string, string] | null {
+// all these functions returns either
+// - an array containing two file paths, which correspond to a pattern
+// - null if nothing found
+
+
+exports.findJsToJsxImport = function(circularPath) {
     for (let i = 0; i < circularPath.length - 1; i++) {
         const current = circularPath[i];
         const next = circularPath[i + 1];
@@ -11,7 +16,7 @@ export function findJsToJsxImport(circularPath: string[]): [string, string] | nu
     return null;
 }
 
-export function findSomethingToRouteImport(circularPath: string[]): [string, string] | null {
+exports.findSomethingToRouteImport = function(circularPath) {
     for (let i = 0; i < circularPath.length - 1; i++) {
         const current = circularPath[i];
         const next = circularPath[i + 1];
@@ -26,7 +31,7 @@ export function findSomethingToRouteImport(circularPath: string[]): [string, str
     return null;
 }
 
-export function findUtilRouteToFetchImport(circularPath: string[]): [string, string] | null {
+exports.findUtilRouteToFetchImport = function(circularPath) {
     for (let i = 0; i < circularPath.length - 1; i++) {
         const current = circularPath[i];
         const next = circularPath[i + 1];
@@ -38,7 +43,7 @@ export function findUtilRouteToFetchImport(circularPath: string[]): [string, str
     return null;
 }
 
-export function findUtilPromiseToReduxStoreImport(circularPath: string[]): [string, string] | null {
+exports.findUtilPromiseToReduxStoreImport = function(circularPath) {
     for (let i = 0; i < circularPath.length - 1; i++) {
         const current = circularPath[i];
         const next = circularPath[i + 1];

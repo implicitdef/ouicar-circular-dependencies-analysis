@@ -1,7 +1,7 @@
-import * as fs from 'fs';
-import * as _ from 'lodash';
-import * as Util from './util';
-import * as path from 'path';
+const fs = require('fs');
+const _ = require('lodash');
+const path = require('path');
+const Util = require('./util');
 
 console.log('**** Circular dependencies analysis ****');
 
