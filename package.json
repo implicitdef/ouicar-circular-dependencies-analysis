@@ -1,0 +1,13 @@
+{
+  "name": "circular",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.85",
+    "@types/node": "^8.0.51",
+    "lodash": "^4.17.4",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.1"
+  }
+}
